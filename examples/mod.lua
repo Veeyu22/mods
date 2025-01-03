@@ -207,7 +207,7 @@ local poor_mans_endlesss = define_boon {
         e.api.set_counter { source = e.self, value = "Tribute "..(e.api.current_tribute + e.data.extra_tributes) }
     end,
     on_after_drop = function(e)
-        if e.api.current_tribute == 9 and e.api.remaining_drops == 0 then
+        if e.api.current_tribute >= 9 and e.api.remaining_drops == 0 then
             if e.api.money > e.api.money_goal then
                 if e.data.extra_tributes == 0 then
                     e.api.notify { source = e.self, text = "You survived the last tribute, welcome to Poor Man's Endless Mode!" }
@@ -216,6 +216,8 @@ local poor_mans_endlesss = define_boon {
                 end
                 e.api.earn { source = e.self, base = -e.api.money, mult }
                 e.api.gain_drops { source = e.self, amount = 7 }
+                e.api.gain_removals { source = e.self, amount = 2 }
+                e.api.gain_rerolls { source = e.self, amount = 2 }
                 e.api.set_money_goal { amount = e.api.money_goal * 2 }
                 e.data.extra_tributes = e.data.extra_tributes + 1
             end
